@@ -18,7 +18,7 @@ require (
 	github.com/ugorji/go v1.2.6 // indirect
 	github.com/unknwon/com v1.0.1
 	golang.org/x/crypto v0.0.0-20210817164053-32db794688a5 // indirect
-	golang.org/x/sys v0.0.0-20210817190340-bfb29a6856f2 // indirect
+	golang.org/x/sys v0.0.0-20210820121016-41cdb8703e55 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/protobuf v1.27.1 // indirect
 	gopkg.in/ini.v1 v1.47.0 // indirect
