@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/luenci/go-gin-example/pkg/setting"
@@ -19,7 +20,9 @@ func main() {
 		MaxHeaderBytes: 1 << 20,
 	}
 
-	s.ListenAndServe()
+	if err := s.ListenAndServe(); err != nil {
+		log.Fatal(err)
+	}
 }
 
 // Addr：监听的 TCP 地址，格式为:8000

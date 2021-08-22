@@ -4,7 +4,8 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/luenci/go-gin-example/models"
+	"github.com/go-playground/validator/v10"
+	models "github.com/luenci/go-gin-example/models"
 	"github.com/luenci/go-gin-example/pkg/e"
 	"github.com/luenci/go-gin-example/pkg/setting"
 	"github.com/luenci/go-gin-example/pkg/util"
@@ -41,6 +42,27 @@ func GetTags(c *gin.Context) {
 
 // AddTag 新增文章标签
 func AddTag(c *gin.Context) {
+	name := c.Query("name")
+	state := com.StrTo(c.DefaultQuery("state", "0")).MustInt()
+	createdBy := c.Query("created_by")
+
+	valid := validator.New()
+	newTag := &models.Tag{Name: name, State: state, CreatedBy: createdBy}
+	err := valid.Struct(newTag)
+
+	var code int
+	if err != nil {
+		code = e.ERROR_EXIST_TAG
+	} else {
+		code = e.SUCCESS
+		models.AddTag(name, state, createdBy)
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"code": code,
+		"msg":  e.GetMsg(code),
+		"data": make(map[string]string),
+	})
 
 }
 

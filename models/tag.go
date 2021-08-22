@@ -4,10 +4,10 @@ package models
 type Tag struct {
 	Model
 
-	Name       string `json:"name"`
-	CreatedBy  string `json:"created_by"`
+	Name       string `json:"name" validate:"required"`
+	CreatedBy  string `json:"created_by" validate:"required,max=100"`
 	ModifiedBy string `json:"modified_by"`
-	State      int    `json:"state"`
+	State      int    `json:"state" validate:"eq=0|eq=1"`
 }
 
 // GetTags 获取指定页数的 tag 表记录

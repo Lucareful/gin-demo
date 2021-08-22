@@ -1,2 +1,7 @@
 // tags Get api
 GET http://127.0.0.1:8000/api/v1/tags/?name=luenci&state=1
+
+###
+
+// tags post add
+POST http://127.0.0.1:8000/api/v1/tags?name=1&state=1&created_by=test
