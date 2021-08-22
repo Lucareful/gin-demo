@@ -1,4 +1,8 @@
-
+# vscode配置
 .vscode
 
+# 项目配置文件
 *.ini
+
+# gormt
+.yml

@@ -3,6 +3,7 @@ package routers
 import (
 	"github.com/gin-gonic/gin"
 
+	middleware "github.com/luenci/go-gin-example/middleware"
 	"github.com/luenci/go-gin-example/pkg/setting"
 	v1 "github.com/luenci/go-gin-example/routers/api/v1"
 )
@@ -10,6 +11,8 @@ import (
 // InitRouter 初始化路由
 func InitRouter() *gin.Engine {
 	r := gin.New()
+
+	r.Use(middleware.Timter())
 
 	r.Use(gin.Logger())
 
