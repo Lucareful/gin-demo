@@ -1,5 +1,11 @@
 package models
 
+import (
+	"time"
+
+	"github.com/jinzhu/gorm"
+)
+
 // Tag tag 表的结构体
 type Tag struct {
 	Model
@@ -40,4 +46,22 @@ func AddTag(name string, state int, createdBy string) bool {
 	})
 
 	return true
+}
+
+// BeforeCreate 创建 tag 记录时候设置 CreatedOn 字段为随着时间自增
+func (tag *Tag) BeforeCreate(scope *gorm.Scope) error {
+	if err := scope.SetColumn("CreatedOn", time.Now().Unix()); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// BeforeUpdate 更新 tag 记录时候设置 CreatedOn 字段为随着时间更新
+func (tag *Tag) BeforeUpdate(scope *gorm.Scope) error {
+	if err := scope.SetColumn("ModifiedOn", time.Now().Unix()); err != nil {
+		return err
+	}
+
+	return nil
 }
