@@ -46,7 +46,7 @@ func validateStruct() {
 	user := &User{
 		FirstName:      "Badger",
 		LastName:       "Smith",
-		Age:            135,
+		Age:            0,
 		Email:          "Badger.Smith@gmail.com",
 		FavouriteColor: "#000-",
 		Addresses:      []*Address{address},
@@ -54,7 +54,6 @@ func validateStruct() {
 
 	// returns nil or ValidationErrors ( []FieldError )
 	err := validate.Struct(user)
-	fmt.Println("err", err)
 	if err != nil {
 
 		// this check is only needed when your code could produce
