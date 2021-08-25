@@ -14,19 +14,19 @@ import (
 
 // GetTags 获取多个文章标签
 func GetTags(c *gin.Context) {
-	name := c.Query("name")
 
 	maps := make(map[string]interface{})
 	data := make(map[string]interface{})
+	var t models.Tag
 
-	if name != "" {
-		maps["name"] = name
+	if err := c.ShouldBindJSON(&t); err != nil {
+		c.AbortWithStatusJSON(
+			http.StatusInternalServerError,
+			gin.H{"error": err.Error()})
+		return
 	}
 
-	if arg := c.Query("state"); arg != "" {
-		state := com.StrTo(arg).MustInt()
-		maps["state"] = state
-	}
+	maps["state"] = t.State
 
 	code := e.SUCCESS
 
