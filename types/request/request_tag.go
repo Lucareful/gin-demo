@@ -18,8 +18,8 @@ type GetTagRequest struct {
 type CreateTagRequest struct {
 }
 
-// UpdatesTagRequest tag 表 update 接口请求 struct
-type UpdatesTagRequest struct {
+// UpdateTagRequest tag 表 update 接口请求 struct
+type UpdateTagRequest struct {
 }
 
 // DeleteTagRequest tag 表 update 接口请求 struct

@@ -35,4 +35,5 @@ replace (
 	github.com/luenci/go-gin-example/pkg/setting => ./pkg/setting
 	github.com/luenci/go-gin-example/routers => ./routers
 	github.com/luenci/go-gin-example/types => ./types
+	github.com/luenci/go-gin-example/service => ./service
 )

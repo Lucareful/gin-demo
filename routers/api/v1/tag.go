@@ -7,17 +7,15 @@ import (
 	"github.com/go-playground/validator/v10"
 	models "github.com/luenci/go-gin-example/models"
 	"github.com/luenci/go-gin-example/pkg/e"
-	"github.com/luenci/go-gin-example/pkg/setting"
-	"github.com/luenci/go-gin-example/pkg/util"
+	"github.com/luenci/go-gin-example/service"
 	"github.com/luenci/go-gin-example/types/request"
-	"github.com/luenci/go-gin-example/types/response"
 	"github.com/unknwon/com"
 )
 
-// GetTags 获取多个文章标签
-func GetTags(c *gin.Context) {
+// List 获取多个文章标签
+func List(c *gin.Context) {
 	var r request.ListTagRequest
-	q := &response.ListTagResponse{}
+	var q service.Tagservice
 
 	if err := c.ShouldBindQuery(&r); err != nil {
 		c.AbortWithStatusJSON(
@@ -26,22 +24,13 @@ func GetTags(c *gin.Context) {
 		return
 	}
 
-	q.Data = make(map[string]interface{})
+	response := q.ListTagService(r)
 
-	q.Data["state"] = r.State
-
-	q.Code = e.SUCCESS
-
-	q.Data["lists"] = models.GetTags(util.GetPage(c), setting.PageSize, q.Data["state"])
-	q.Data["total"] = models.GetTagTotal(q.Data["state"])
-
-	q.Msg = e.GetMsg(q.Code)
-
-	c.JSON(http.StatusOK, q)
+	c.JSON(http.StatusOK, response)
 }
 
-// AddTag 新增文章标签
-func AddTag(c *gin.Context) {
+// Create 新增文章标签
+func Create(c *gin.Context) {
 	name := c.Query("name")
 	state := com.StrTo(c.DefaultQuery("state", "0")).MustInt()
 	createdBy := c.Query("created_by")
@@ -66,10 +55,10 @@ func AddTag(c *gin.Context) {
 
 }
 
-// EditTag 修改文章标签
-func EditTag(c *gin.Context) {
+// Update 修改文章标签
+func Update(c *gin.Context) {
 }
 
-// DeleteTag 删除文章标签
-func DeleteTag(c *gin.Context) {
+// Delete 删除文章标签
+func Delete(c *gin.Context) {
 }
