@@ -9,35 +9,35 @@ import (
 	"github.com/luenci/go-gin-example/pkg/e"
 	"github.com/luenci/go-gin-example/pkg/setting"
 	"github.com/luenci/go-gin-example/pkg/util"
+	"github.com/luenci/go-gin-example/types/request"
+	"github.com/luenci/go-gin-example/types/response"
 	"github.com/unknwon/com"
 )
 
 // GetTags 获取多个文章标签
 func GetTags(c *gin.Context) {
+	var r request.ListTagRequest
+	q := &response.ListTagResponse{}
 
-	maps := make(map[string]interface{})
-	data := make(map[string]interface{})
-	var t models.Tag
-
-	if err := c.ShouldBindJSON(&t); err != nil {
+	if err := c.ShouldBindQuery(&r); err != nil {
 		c.AbortWithStatusJSON(
 			http.StatusInternalServerError,
 			gin.H{"error": err.Error()})
 		return
 	}
 
-	maps["state"] = t.State
+	q.Data = make(map[string]interface{})
 
-	code := e.SUCCESS
+	q.Data["state"] = r.State
 
-	data["lists"] = models.GetTags(util.GetPage(c), setting.PageSize, maps)
-	data["total"] = models.GetTagTotal(maps)
+	q.Code = e.SUCCESS
 
-	c.JSON(http.StatusOK, gin.H{
-		"code": code,
-		"msg":  e.GetMsg(code),
-		"data": data,
-	})
+	q.Data["lists"] = models.GetTags(util.GetPage(c), setting.PageSize, q.Data["state"])
+	q.Data["total"] = models.GetTagTotal(q.Data["state"])
+
+	q.Msg = e.GetMsg(q.Code)
+
+	c.JSON(http.StatusOK, q)
 }
 
 // AddTag 新增文章标签
