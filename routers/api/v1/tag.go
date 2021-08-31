@@ -18,9 +18,13 @@ func List(c *gin.Context) {
 	var q service.Tagservice
 
 	if err := c.ShouldBindQuery(&r); err != nil {
+		erros := make(map[string]interface{})
+		erros["code"] = e.VALIDARION_ERRORS
+		erros["message"] = e.GetMsg(e.VALIDARION_ERRORS)
+
 		c.AbortWithStatusJSON(
 			http.StatusInternalServerError,
-			gin.H{"error": err.Error()})
+			gin.H{"data": erros})
 		return
 	}
 
