@@ -21,6 +21,7 @@ require (
 	golang.org/x/crypto v0.0.0-20210817164053-32db794688a5 // indirect
 	golang.org/x/sys v0.0.0-20210820121016-41cdb8703e55 // indirect
 	golang.org/x/text v0.3.7 // indirect
+	golang.org/x/tools v0.0.0-20190328211700-ab21143f2384
 	google.golang.org/protobuf v1.27.1 // indirect
 	gopkg.in/ini.v1 v1.47.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
