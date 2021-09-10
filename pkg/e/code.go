@@ -1,40 +1,77 @@
+// Copyright 2020 Lingfei Kong <colin404@foxmail.com>. All rights reserved.
+// Use of this source code is governed by a MIT style
+// license that can be found in the LICENSE file.
+
 package e
 
-const (
-	// SUCCESS - 200: OK.
-	SUCCESS int = iota + 10001
+import (
+	"net/http"
 
-	// ERROR - 500: Fail.
-	ERROR
-
-	// INVALID_PARAMS - 400: Request parameter error.
-	INVALID_PARAMS
-
-	// ERROR_EXIST_TAG - 401: The label already exists.
-	ERROR_EXIST_TAG
-
-	// ERROR_NOT_EXIST_TAG - 401: The label does not exist.
-	ERROR_NOT_EXIST_TAG
-
-	// ERROR_NOT_EXIST_ARTICLE - 401: The article does not exist.
-	ERROR_NOT_EXIST_ARTICLE
+	"github.com/marmotedu/errors"
+	"github.com/novalagung/gubrak"
 )
 
-const (
-	// ERROR_AUTH_CHECK_TOKEN_FAIL - 403: Token鉴权失败.
-	ERROR_AUTH_CHECK_TOKEN_FAIL int = iota + 20001
+// ErrCode implements `github.com/marmotedu/errors`.Coder interface.
+type ErrCode struct {
+	// C refers to the code of the ErrCode.
+	C int
 
-	// ERROR_AUTH_CHECK_TOKEN_TIMEOUT - 403: Token已超时.
-	ERROR_AUTH_CHECK_TOKEN_TIMEOUT
+	// HTTP status that should be used for the associated error code.
+	HTTP int
 
-	// ERROR_AUTH_TOKEN - 403: Token生成失败.
-	ERROR_AUTH_TOKEN
+	// External (user) facing error text.
+	Ext string
 
-	// ERROR_AUTH - 403: Token错误.
-	ERROR_AUTH
-)
+	// Ref specify the reference document.
+	Ref string
+}
 
-const (
-	// VALIDARION_ERRORS - 403: Illegal field.
-	VALIDARION_ERRORS int = iota + 30001
-)
+var _ errors.Coder = &ErrCode{}
+
+// Code returns the integer code of ErrCode.
+func (coder ErrCode) Code() int {
+	return coder.C
+}
+
+// String implements stringer. String returns the external error message,
+// if any.
+func (coder ErrCode) String() string {
+	return coder.Ext
+}
+
+// Reference returns the reference document.
+func (coder ErrCode) Reference() string {
+	return coder.Ref
+}
+
+// HTTPStatus returns the associated HTTP status code, if any. Otherwise,
+// returns 200.
+func (coder ErrCode) HTTPStatus() int {
+	if coder.HTTP == 0 {
+		return http.StatusInternalServerError
+	}
+
+	return coder.HTTP
+}
+
+// nolint: unparam,deadcode
+func register(code int, httpStatus int, message string, refs ...string) {
+	found, _ := gubrak.Includes([]int{200, 400, 401, 403, 404, 500}, httpStatus)
+	if !found {
+		panic("http code not in `200, 400, 401, 403, 404, 500`")
+	}
+
+	var reference string
+	if len(refs) > 0 {
+		reference = refs[0]
+	}
+
+	coder := &ErrCode{
+		C:    code,
+		HTTP: httpStatus,
+		Ext:  message,
+		Ref:  reference,
+	}
+
+	errors.MustRegister(coder)
+}
