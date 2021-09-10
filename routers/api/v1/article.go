@@ -39,7 +39,7 @@ func GetArticle(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{
 		"code": code,
-		"msg":  e.GetMsg(code),
+		"msg":e.GetMsg(code),
 		"data": data,
 	})
 }
