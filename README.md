@@ -10,8 +10,7 @@
 ├── api.http
 ├── conf
 │   ├── app.ini
-│   ├── config.yml
-│   └── model
+│   └── config.yml
 ├── go.mod
 ├── go.sum
 ├── main.go
@@ -24,15 +23,19 @@
 ├── pkg
 │   ├── e
 │   ├── setting
+│   ├── tools
 │   └── util
 ├── routers
 │   ├── api
 │   └── router.go
 ├── run-go-vet.sh
 ├── runtime
+├── service
+│   └── service_tag.go
 ├── tests
-│   └── validator_tests.go
+│   ├── concatStr_test.go
+│   └── validator_test.go
 └── types
     ├── request
-    └── responses
+    └── response
 ``
