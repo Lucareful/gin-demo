@@ -1,6 +1,8 @@
 # vscode配置
 .vscode
 
+.idea/
+
 # 项目配置文件
 *.ini
 
