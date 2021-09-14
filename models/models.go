@@ -46,6 +46,8 @@ func init() {
 		log.Println(err)
 	}
 
+	//db.AutoMigrate(&CasbinTable{})
+
 	gorm.DefaultTableNameHandler = func(db *gorm.DB, defaultTableName string) string {
 		return tablePrefix + defaultTableName
 	}

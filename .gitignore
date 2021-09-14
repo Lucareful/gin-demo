@@ -3,6 +3,8 @@
 
 vendor/
 
+tmp/
+
 .idea/
 
 # 项目配置文件
