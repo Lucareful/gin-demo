@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	util "github.com/luenci/go-gin-example/pkg/util"
+	"github.com/luenci/go-gin-example/pkg/util"
 )
 
 func TestConcatStr(t *testing.T) {
