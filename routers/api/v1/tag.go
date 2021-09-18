@@ -66,3 +66,8 @@ func Update(c *gin.Context) {
 // Delete 删除文章标签
 func Delete(c *gin.Context) {
 }
+
+// Get 获取单个文章标签
+func Get(c *gin.Context) {
+
+}
