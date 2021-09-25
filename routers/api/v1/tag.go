@@ -7,7 +7,7 @@ import (
 	"github.com/go-playground/validator/v10"
 	models "github.com/luenci/go-gin-example/models"
 	"github.com/luenci/go-gin-example/pkg/e"
-	"github.com/luenci/go-gin-example/service"
+	"github.com/luenci/go-gin-example/routers/api"
 	"github.com/luenci/go-gin-example/types/request"
 	"github.com/unknwon/com"
 )
@@ -15,7 +15,6 @@ import (
 // List 获取多个文章标签
 func List(c *gin.Context) {
 	var r request.ListTagRequest
-	var q service.Tagservice
 
 	if err := c.ShouldBindQuery(&r); err != nil {
 		erros := make(map[string]interface{})
@@ -28,7 +27,7 @@ func List(c *gin.Context) {
 		return
 	}
 
-	response := q.ListTagService(r)
+	response := api.Svc.Tag.ListTagService(r)
 
 	c.JSON(http.StatusOK, response)
 }
