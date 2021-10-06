@@ -3,6 +3,8 @@ package models
 import (
 	"time"
 
+	"github.com/luenci/go-gin-example/types/request"
+
 	"github.com/jinzhu/gorm"
 )
 
@@ -31,21 +33,18 @@ func GetTagTotal(maps interface{}) (count int) {
 }
 
 // ExistTagByName 判断 tag 记录是否存在
-func ExistTagByName(name string) bool {
+func ExistTagByName(name string) error {
 	var tag Tag
-	db.Select("id").Where("name = ?", name).First(&tag)
-	return tag.ID > 0
+	return db.Select("id").Where("name = ?", name).First(&tag).Error
 }
 
 // AddTag 为 tag 表增加一条记录
-func AddTag(name string, state int, createdBy string) bool {
-	db.Create(&Tag{
-		Name:      name,
-		State:     state,
-		CreatedBy: createdBy,
-	})
-
-	return true
+func AddTag(r request.CreateTagRequest) error {
+	return db.Create(&Tag{
+		Name:      r.Name,
+		State:     r.State,
+		CreatedBy: r.CreatedBy,
+	}).Error
 }
 
 // BeforeCreate 创建 tag 记录时候设置 CreatedOn 字段为随着时间自增

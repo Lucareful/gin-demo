@@ -4,12 +4,10 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/go-playground/validator/v10"
 	models "github.com/luenci/go-gin-example/models"
 	"github.com/luenci/go-gin-example/pkg/e"
-	"github.com/luenci/go-gin-example/routers/api"
+	errors "github.com/luenci/go-gin-example/pkg/errors"
 	"github.com/luenci/go-gin-example/types/request"
-	"github.com/unknwon/com"
 )
 
 // List 获取多个文章标签
@@ -27,27 +25,24 @@ func List(c *gin.Context) {
 		return
 	}
 
-	response := api.Svc.Tag.ListTagService(r)
+	response := svc.Tag.ListTagService(r)
 
 	c.JSON(http.StatusOK, response)
 }
 
 // Create 新增文章标签
 func Create(c *gin.Context) {
-	name := c.Query("name")
-	state := com.StrTo(c.DefaultQuery("state", "0")).MustInt()
-	createdBy := c.Query("created_by")
-
-	valid := validator.New()
-	newTag := &models.Tag{Name: name, State: state, CreatedBy: createdBy}
-	err := valid.Struct(newTag)
-
+	var r request.CreateTagRequest
 	var code int
-	if err != nil {
-		code = e.ERROR_EXIST_TAG
-	} else {
-		code = e.SUCCESS
-		models.AddTag(name, state, createdBy)
+
+	if err := c.ShouldBindQuery(&r); err != nil {
+		errors.WithCode(e.ERROR_EXIST_TAG)
+		return
+	}
+
+	code = e.SUCCESS
+	if err := models.AddTag(r); err != nil {
+		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{

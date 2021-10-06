@@ -1,5 +1,5 @@
-package api
+package v1
 
 import "github.com/luenci/go-gin-example/service"
 
-var Svc = service.NewService()
+var svc = service.NewService()
