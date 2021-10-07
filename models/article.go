@@ -7,9 +7,9 @@ import (
 )
 
 type Article struct {
-	Model
+	gorm.Model
 
-	TagID int `json:"tag_id" gorm:"index"  validate:"required,gt=0"`
+	TagID int `json:"tag_id" gorm:"index"`
 	Tag   Tag `json:"tag"`
 
 	Title      string `json:"title"`
@@ -17,7 +17,7 @@ type Article struct {
 	Content    string `json:"content"`
 	CreatedBy  string `json:"created_by"`
 	ModifiedBy string `json:"modified_by"`
-	State      int    `json:"state" validate:"required,eq=0|eq=1"`
+	State      int    `json:"state"`
 }
 
 func ExistArticleByID(id int) bool {

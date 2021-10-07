@@ -30,6 +30,8 @@ func (t *Tagservice) ListTagService(r request.ListTagRequest) response.ListTagRe
 }
 
 func (t *Tagservice) CreateTagService(r request.CreateTagRequest) response.CreateTagResponse {
+	var q response.CreateTagResponse
+
 	return response.CreateTagResponse{}
 }
 

@@ -3,10 +3,11 @@ package v1
 import (
 	"net/http"
 
+	"github.com/marmotedu/errors"
+
 	"github.com/gin-gonic/gin"
 	models "github.com/luenci/go-gin-example/models"
 	"github.com/luenci/go-gin-example/pkg/e"
-	errors "github.com/luenci/go-gin-example/pkg/errors"
 	"github.com/luenci/go-gin-example/types/request"
 )
 
@@ -33,21 +34,20 @@ func List(c *gin.Context) {
 // Create 新增文章标签
 func Create(c *gin.Context) {
 	var r request.CreateTagRequest
-	var code int
 
 	if err := c.ShouldBindQuery(&r); err != nil {
-		errors.WithCode(e.ERROR_EXIST_TAG)
+		c.JSON(http.StatusBadRequest, errors.WithCode(e.VALIDARION_ERRORS, e.GetMsg(e.VALIDARION_ERRORS)))
 		return
 	}
 
-	code = e.SUCCESS
 	if err := models.AddTag(r); err != nil {
+		c.JSON(http.StatusInternalServerError, errors.WithCode(e.ERROR_EXIST_TAG, e.GetMsg(e.ERROR_EXIST_TAG)))
 		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"code": code,
-		"msg":  e.GetMsg(code),
+		"code": e.SUCCESS,
+		"msg":  e.GetMsg(e.SUCCESS),
 		"data": make(map[string]string),
 	})
 

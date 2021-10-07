@@ -10,12 +10,12 @@ import (
 
 // Tag tag 表的结构体
 type Tag struct {
-	Model
+	gorm.Model
 
-	Name       string `json:"name" validate:"required"`
-	CreatedBy  string `json:"created_by" validate:"required,max=100"`
+	Name       string `json:"name"`
+	CreatedBy  string `json:"created_by"`
 	ModifiedBy string `json:"modified_by"`
-	State      int    `json:"state" validate:"eq=0|eq=1"`
+	State      int    `json:"state"`
 }
 
 // GetTags 获取指定页数的 tag 表记录
