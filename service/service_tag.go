@@ -10,7 +10,7 @@ import (
 
 type Tagservice struct{}
 
-func (t *Tagservice) ListTagService(r request.ListTagRequest) response.ListTagResponse {
+func (t *Tagservice) ListTagService(r request.ListTagRequest) (*response.ListTagResponse, error) {
 
 	var q response.ListTagResponse
 
@@ -26,19 +26,31 @@ func (t *Tagservice) ListTagService(r request.ListTagRequest) response.ListTagRe
 
 	q.Msg = e.GetMsg(q.Code)
 
-	return q
+	return &q, nil
 }
 
-func (t *Tagservice) CreateTagService(r request.CreateTagRequest) response.CreateTagResponse {
-	var q response.CreateTagResponse
+func (t *Tagservice) CreateTagService(r request.CreateTagRequest) (*response.CreateTagResponse, error) {
+	if err := models.AddTag(r); err != nil {
+		return nil, nil
+	}
 
-	return response.CreateTagResponse{}
+	q := &response.CreateTagResponse{
+		Response: response.Response{
+			Code: e.SUCCESS,
+			Msg:  e.GetMsg(e.SUCCESS),
+		},
+		Name:      r.Name,
+		CreatedBy: r.CreatedBy,
+		State:     r.State,
+	}
+
+	return q, nil
 }
 
-func (t *Tagservice) UpdateTagService(r request.UpdateTagRequest) response.UpdateTagResponse {
-	return response.UpdateTagResponse{}
+func (t *Tagservice) UpdateTagService(r request.UpdateTagRequest) (*response.UpdateTagResponse, error) {
+	return nil, nil
 }
 
-func (t *Tagservice) DeleteTagService(r request.DeleteTagRequest) response.DeleteTagResponse {
-	return response.DeleteTagResponse{}
+func (t *Tagservice) DeleteTagService(r request.DeleteTagRequest) (*response.DeleteTagResponse, error) {
+	return nil, nil
 }

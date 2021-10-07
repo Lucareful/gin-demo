@@ -10,10 +10,10 @@ type Service struct {
 }
 
 type TagService interface {
-	ListTagService(request.ListTagRequest) response.ListTagResponse
-	CreateTagService(request.CreateTagRequest) response.CreateTagResponse
-	UpdateTagService(request.UpdateTagRequest) response.UpdateTagResponse
-	DeleteTagService(request.DeleteTagRequest) response.DeleteTagResponse
+	ListTagService(request.ListTagRequest) (*response.ListTagResponse, error)
+	CreateTagService(request.CreateTagRequest) (*response.CreateTagResponse, error)
+	UpdateTagService(request.UpdateTagRequest) (*response.UpdateTagResponse, error)
+	DeleteTagService(request.DeleteTagRequest) (*response.DeleteTagResponse, error)
 }
 
 func NewService() *Service {

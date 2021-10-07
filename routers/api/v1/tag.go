@@ -6,7 +6,6 @@ import (
 	"github.com/marmotedu/errors"
 
 	"github.com/gin-gonic/gin"
-	models "github.com/luenci/go-gin-example/models"
 	"github.com/luenci/go-gin-example/pkg/e"
 	"github.com/luenci/go-gin-example/types/request"
 )
@@ -26,7 +25,11 @@ func List(c *gin.Context) {
 		return
 	}
 
-	response := svc.Tag.ListTagService(r)
+	response, err := svc.Tag.ListTagService(r)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, errors.WithCode(e.ERROR_NOT_EXIST_TAG, e.GetMsg(e.ERROR_NOT_EXIST_TAG)))
+		return
+	}
 
 	c.JSON(http.StatusOK, response)
 }
@@ -35,21 +38,18 @@ func List(c *gin.Context) {
 func Create(c *gin.Context) {
 	var r request.CreateTagRequest
 
-	if err := c.ShouldBindQuery(&r); err != nil {
+	if err := c.ShouldBindJSON(&r); err != nil {
 		c.JSON(http.StatusBadRequest, errors.WithCode(e.VALIDARION_ERRORS, e.GetMsg(e.VALIDARION_ERRORS)))
 		return
 	}
 
-	if err := models.AddTag(r); err != nil {
+	response, err := svc.Tag.CreateTagService(r)
+	if err != nil {
 		c.JSON(http.StatusInternalServerError, errors.WithCode(e.ERROR_EXIST_TAG, e.GetMsg(e.ERROR_EXIST_TAG)))
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"code": e.SUCCESS,
-		"msg":  e.GetMsg(e.SUCCESS),
-		"data": make(map[string]string),
-	})
+	c.JSON(http.StatusOK, response)
 
 }
 
