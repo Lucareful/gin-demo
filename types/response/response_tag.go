@@ -2,7 +2,6 @@ package response
 
 // ListTagResponse tag 表 list 接口响应(返回) struct
 type ListTagResponse struct {
-	Response
 	Data map[string]interface{} `json:"data"`
 }
 
@@ -12,7 +11,6 @@ type GetTagResponse struct {
 
 // CreateTagResponse tag 表 create 接口响应(返回) struct
 type CreateTagResponse struct {
-	Response
 	Name      string `json:"name"`
 	CreatedBy string `json:"created_by"`
 	State     int    `json:"state"`
