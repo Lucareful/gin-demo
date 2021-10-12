@@ -6,8 +6,8 @@ type ListTagRequest struct {
 	State int    `form:"state" binding:"eq=0"`
 }
 
-// GetTagRequest tag 表 get 接口请求 struct
-type GetTagRequest struct {
+// GetTagsRequest tag 表 get 接口请求 struct
+type GetTagsRequest struct {
 	Name       string `form:"name" binding:"required"`
 	CreatedBy  string `form:"created_by" binding:"required,max=100"`
 	ModifiedBy string `form:"modified_by"`

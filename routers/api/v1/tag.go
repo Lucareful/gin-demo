@@ -3,6 +3,8 @@ package v1
 import (
 	"net/http"
 
+	"github.com/luenci/go-gin-example/pkg/http/render"
+
 	"github.com/marmotedu/errors"
 
 	"github.com/gin-gonic/gin"
@@ -39,17 +41,16 @@ func Create(c *gin.Context) {
 	var r request.CreateTagRequest
 
 	if err := c.ShouldBindJSON(&r); err != nil {
-		c.JSON(http.StatusBadRequest, errors.WithCode(e.VALIDARION_ERRORS, e.GetMsg(e.VALIDARION_ERRORS)))
+		render.WriteResponse(c, errors.WithCode(e.VALIDARION_ERRORS, e.GetMsg(e.VALIDARION_ERRORS)), nil)
 		return
 	}
 
 	response, err := svc.Tag.CreateTagService(r)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, errors.WithCode(e.ERROR_EXIST_TAG, e.GetMsg(e.ERROR_EXIST_TAG)))
+		render.WriteResponse(c, errors.WithCode(e.ERROR_EXIST_TAG, e.GetMsg(e.ERROR_EXIST_TAG)), nil)
 		return
 	}
-
-	c.JSON(http.StatusOK, response)
+	render.WriteResponse(c, errors.WithCode(e.SUCCESS, e.GetMsg(e.SUCCESS)), response)
 
 }
 

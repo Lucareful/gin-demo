@@ -25,17 +25,20 @@ func GetTags(pageNum int, pageSize int, maps interface{}) (tags []Tag) {
 	return
 }
 
+// GetTag 获取单个 tag 记录.
+func GetTag(id uint) error {
+	return db.Where("id = ?", id).Find(&Tag{}).Error
+}
+
 // GetTagTotal 获取 tag 表所有记录条数
 func GetTagTotal(maps interface{}) (count int) {
 	db.Model(&Tag{}).Where(maps).Count(&count)
-
 	return
 }
 
 // ExistTagByName 判断 tag 记录是否存在
 func ExistTagByName(name string) error {
-	var tag Tag
-	return db.Select("id").Where("name = ?", name).First(&tag).Error
+	return db.Select("id").Where("name = ?", name).First(&Tag{}).Error
 }
 
 // AddTag 为 tag 表增加一条记录
