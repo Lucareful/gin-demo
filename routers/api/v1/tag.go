@@ -34,7 +34,19 @@ import (
 //	c.JSON(http.StatusOK, response)
 //}
 
-// Create 新增文章标签
+// Create godoc
+// @Summary create a tag - 创建一个文章标签
+// @Description get string by ID
+// @ID get-string-by-int
+// @Accept  json
+// @Produce  json
+// @Param id path int true "Account ID"
+// @Success 200 {object} model.Account
+// @Header 200 {string} Token "qwerty"
+// @Failure 400,404 {object} httputil.HTTPError
+// @Failure 500 {object} httputil.HTTPError
+// @Failure default {object} httputil.DefaultError
+// @Router /accounts/{id} [get]
 func Create(c *gin.Context) {
 	var r request.CreateTagRequest
 
