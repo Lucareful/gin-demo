@@ -6,14 +6,6 @@ type ListTagRequest struct {
 	State int    `form:"state" binding:"eq=0"`
 }
 
-// GetTagsRequest tag 表 get 接口请求 struct
-type GetTagsRequest struct {
-	Name       string `form:"name" binding:"required"`
-	CreatedBy  string `form:"created_by" binding:"required,max=100"`
-	ModifiedBy string `form:"modified_by"`
-	State      int    `form:"state"  binding:"eq=0|eq=1"`
-}
-
 // CreateTagRequest tag 表 create 接口请求 struct
 type CreateTagRequest struct {
 	Name      string `json:"name" binding:"required"`
@@ -23,8 +15,7 @@ type CreateTagRequest struct {
 
 // UpdateTagRequest tag 表 update 接口请求 struct
 type UpdateTagRequest struct {
-}
-
-// DeleteTagRequest tag 表 update 接口请求 struct
-type DeleteTagRequest struct {
+	ID    uint   `json:"id"`
+	Name  string `json:"name"`
+	State int    `json:"state"`
 }

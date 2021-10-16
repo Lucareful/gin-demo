@@ -27,8 +27,21 @@ type tagService struct{}
 //	return &q, nil
 //}
 
-func (t *tagService) GetTagService(request.GetTagRequest) (*response.GetTagResponse, error) {
-	return nil, nil
+func (t *tagService) GetTagService(id uint) (*response.GetTagResponse, error) {
+	var tag models.Tag
+
+	if err := tag.GetTag(id); err != nil {
+		return nil, err
+	}
+	res := &response.GetTagResponse{
+		ID:         tag.ID,
+		Name:       tag.Name,
+		CreatedBy:  tag.CreatedBy,
+		ModifiedBy: tag.ModifiedBy,
+		State:      tag.State,
+	}
+
+	return res, nil
 }
 
 func (t *tagService) CreateTagService(r request.CreateTagRequest) (*response.CreateTagResponse, error) {
@@ -47,7 +60,18 @@ func (t *tagService) CreateTagService(r request.CreateTagRequest) (*response.Cre
 }
 
 func (t *tagService) UpdateTagService(r request.UpdateTagRequest) (*response.UpdateTagResponse, error) {
-	return nil, nil
+	var tag models.Tag
+
+	if err := tag.UpdateTag(r); err != nil {
+		return nil, err
+	}
+	res := &response.UpdateTagResponse{
+		ID:    tag.ID,
+		Name:  tag.Name,
+		State: tag.State,
+	}
+
+	return res, nil
 }
 
 func (t *tagService) DeleteTagService(r request.DeleteTagRequest) (*response.DeleteTagResponse, error) {
