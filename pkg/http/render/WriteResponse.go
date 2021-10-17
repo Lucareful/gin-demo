@@ -64,3 +64,14 @@ func WriteResponse(c *gin.Context, err error, data interface{}) {
 	}
 	c.JSON(httpStatus, response)
 }
+
+// HTTPError example
+type HTTPError struct {
+	Code    int    `json:"code" example:"500"`
+	Message string `json:"message" example:"Service internal error"`
+}
+
+type HTTPSuccess struct {
+	Code    int    `json:"code" example:"200"`
+	Message string `json:"message" example:"request ok 200"`
+}

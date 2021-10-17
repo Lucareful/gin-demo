@@ -74,6 +74,6 @@ func (t *tagService) UpdateTagService(r request.UpdateTagRequest) (*response.Upd
 	return res, nil
 }
 
-func (t *tagService) DeleteTagService(r request.DeleteTagRequest) (*response.DeleteTagResponse, error) {
+func (t *tagService) DeleteTagService(id uint) (*response.DeleteTagResponse, error) {
 	return nil, nil
 }

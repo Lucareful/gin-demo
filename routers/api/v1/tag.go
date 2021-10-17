@@ -36,17 +36,14 @@ import (
 
 // Create godoc
 // @Summary create a tag - 创建一个文章标签
-// @Description get string by ID
-// @ID get-string-by-int
+// @Description create an article tag
+// @Tags tag
 // @Accept  json
 // @Produce  json
-// @Param id path int true "Account ID"
-// @Success 200 {object} model.Account
-// @Header 200 {string} Token "qwerty"
-// @Failure 400,404 {object} httputil.HTTPError
-// @Failure 500 {object} httputil.HTTPError
-// @Failure default {object} httputil.DefaultError
-// @Router /accounts/{id} [get]
+// @Param tag body request.CreateTagRequest true "Add article tag"
+// @Success 200 {object} response.CreateTagResponse
+// @Failure 500 {object} render.HTTPError
+// @Router /api/v1/tag [post]
 func Create(c *gin.Context) {
 	var r request.CreateTagRequest
 
@@ -64,7 +61,16 @@ func Create(c *gin.Context) {
 
 }
 
-// Update 修改文章标签
+// Update godoc
+// @Summary Update a tag - 更新文章标签
+// @Description Update an article tag
+// @Tags tag
+// @Accept  json
+// @Produce  json
+// @Param  tag body request.UpdateTagRequest true "Update article tag"
+// @Success 200 {object} response.UpdateTagResponse
+// @Failure 500 {object} render.HTTPError
+// @Router /api/v1/tag [patch]
 func Update(c *gin.Context) {
 	var r request.UpdateTagRequest
 
@@ -82,7 +88,16 @@ func Update(c *gin.Context) {
 	render.WriteResponse(c, errors.WithCode(e.SUCCESS, e.GetMsg(e.SUCCESS)), response)
 }
 
-// Delete 删除文章标签
+// Delete godoc
+// @Summary Delete a tag - 删除文章标签
+// @Description Delete an article tag
+// @Tags tag
+// @Accept  json
+// @Produce  json
+// @Param  id path int true "Tag ID" Format(uint)
+// @Success 200 {object} render.HTTPSuccess
+// @Failure 500 {object} render.HTTPError
+// @Router /api/v1/tag/{id} [delete]
 func Delete(c *gin.Context) {
 	var id uint
 
@@ -100,7 +115,16 @@ func Delete(c *gin.Context) {
 	render.WriteResponse(c, errors.WithCode(e.SUCCESS, e.GetMsg(e.SUCCESS)), response)
 }
 
-// Get 获取单个文章标签
+// Get godoc
+// @Summary Get a tag - 获取单个文章标签
+// @Description Get an article tag (获取单个文章标签)
+// @Tags tag
+// @Accept  json
+// @Produce  json
+// @Param  id path int true "Tag ID" Format(uint)
+// @Success 200 {object} response.GetTagResponse
+// @Failure 500 {object} render.HTTPError
+// @Router /api/v1/tag/{id} [get]
 func Get(c *gin.Context) {
 	var id uint
 

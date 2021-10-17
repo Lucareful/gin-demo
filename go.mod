@@ -16,10 +16,11 @@ require (
 	github.com/marmotedu/errors v1.0.2
 	github.com/mattn/go-isatty v0.0.14 // indirect
 	github.com/mattn/go-sqlite3 v2.0.3+incompatible // indirect
-	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
-	github.com/modern-go/reflect2 v1.0.1 // indirect
 	github.com/novalagung/gubrak v1.0.0
 	github.com/smartystreets/goconvey v0.0.0-20190731233626-505e41936337 // indirect
+	github.com/swaggo/files v0.0.0-20210815190702-a29dd2bc99b2
+	github.com/swaggo/gin-swagger v1.3.2
+	github.com/swaggo/swag v1.7.3
 	github.com/ugorji/go v1.2.6 // indirect
 	github.com/unknwon/com v1.0.1
 	golang.org/x/crypto v0.0.0-20210817164053-32db794688a5 // indirect
@@ -28,12 +29,12 @@ require (
 	golang.org/x/tools v0.1.7
 	google.golang.org/protobuf v1.27.1 // indirect
 	gopkg.in/ini.v1 v1.47.0 // indirect
-	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
 
 // 后续每新增一个本地应用目录，你都需要主动去 go.mod 文件里新增一条 replace
 replace (
 	github.com/luenci/go-gin-example/conf => ./conf
+	github.com/luenci/go-gin-example/docs => ./docs
 	github.com/luenci/go-gin-example/middleware => ./middleware
 	github.com/luenci/go-gin-example/models => ./models
 	github.com/luenci/go-gin-example/pkg => ./pkg
