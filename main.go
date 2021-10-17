@@ -1,18 +1,24 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"net/http"
+	"os"
+	"os/signal"
+	"time"
 
 	"github.com/luenci/go-gin-example/pkg/setting"
 	"github.com/luenci/go-gin-example/routers"
 )
 
+// swag init -g routers/router.go
+
 func main() {
 	router := routers.InitRouter()
 
-	s := &http.Server{
+	srv := &http.Server{
 		Addr:           fmt.Sprintf(":%d", setting.HTTPPort),
 		Handler:        router,
 		ReadTimeout:    setting.ReadTimeout,
@@ -20,9 +26,26 @@ func main() {
 		MaxHeaderBytes: 1 << 20,
 	}
 
-	if err := s.ListenAndServe(); err != nil {
-		log.Fatal(err)
+	go func() {
+		// service connections
+		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			log.Fatalf("listen: %s\n", err)
+		}
+	}()
+
+	// Wait for interrupt signal to gracefully shut down the server with
+	// a timeout of 5 seconds.
+	quit := make(chan os.Signal)
+	signal.Notify(quit, os.Interrupt)
+	<-quit
+	log.Println("Shutdown Server ...")
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	if err := srv.Shutdown(ctx); err != nil {
+		log.Fatal("Server Shutdown:", err)
 	}
+	log.Println("Server exiting")
 }
 
 // Addr：监听的 TCP 地址，格式为:8000
