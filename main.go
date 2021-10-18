@@ -13,7 +13,10 @@ import (
 	"github.com/luenci/go-gin-example/routers"
 )
 
-// swag init -g routers/router.go
+// 生成 swagger
+//go:generate swag init -g routers/router.go
+// 生成错误码
+//go:generate codegen -type=int pkg/e/apiserver.go
 
 func main() {
 	router := routers.InitRouter()
