@@ -3,12 +3,12 @@ package routers
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/luenci/go-gin-example/docs"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 
 	middleware "github.com/luenci/go-gin-example/middleware"
 	"github.com/luenci/go-gin-example/pkg/setting"
 	v1 "github.com/luenci/go-gin-example/routers/api/v1"
-	swaggerFiles "github.com/swaggo/files"     // gin-swagger middleware
-	ginSwagger "github.com/swaggo/gin-swagger" // gin-swagger middleware
 )
 
 // InitRouter 初始化路由
@@ -31,6 +31,8 @@ func InitRouter() *gin.Engine {
 	docs.SwaggerInfo.BasePath = "/api"
 	docs.SwaggerInfo.Schemes = []string{"http", "https"}
 
+	r.GET("/api/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
 	apiv1 := r.Group("/api/v1")
 	{
 		//获取标签列表
@@ -44,7 +46,6 @@ func InitRouter() *gin.Engine {
 		//删除指定标签
 		apiv1.DELETE("/tags/:id", v1.Delete)
 	}
-	r.GET("/api/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	return r
 }
