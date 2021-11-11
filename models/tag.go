@@ -24,7 +24,10 @@ func (t *Tag) GetTag(id uint) error {
 
 // UpdateTag 更新 tag 记录.
 func (t *Tag) UpdateTag(r request.UpdateTagRequest) error {
-	err := GetDB().Model(&Tag{}).Where("id = ?", r.ID).Updates(&r).First(&t).Error
+	err := GetDB().Model(&Tag{}).Where("id = ?", r.ID).Updates(&Tag{
+		Name:  r.Name,
+		State: r.State,
+	}).First(&t).Error
 	return errors.WithStack(err)
 }
 

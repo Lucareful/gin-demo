@@ -47,8 +47,7 @@ import (
 func Create(c *gin.Context) {
 	var r request.CreateTagRequest
 
-	if err := c.ShouldBindJSON(&r); err != nil {
-		render.WriteResponse(c, errors.WithCode(e.VALIDARION_ERRORS, e.GetMsg(e.VALIDARION_ERRORS)), err)
+	if err := http.Body(c, &r); err != nil {
 		return
 	}
 
@@ -74,8 +73,7 @@ func Create(c *gin.Context) {
 func Update(c *gin.Context) {
 	var r request.UpdateTagRequest
 
-	if err := c.ShouldBindJSON(&r); err != nil {
-		render.WriteResponse(c, errors.WithCode(e.VALIDARION_ERRORS, e.GetMsg(e.VALIDARION_ERRORS)), nil)
+	if err := http.Body(c, &r); err != nil {
 		return
 	}
 
@@ -99,10 +97,9 @@ func Update(c *gin.Context) {
 // @Failure 500 {object} render.HTTPError
 // @Router /api/v1/tag/{id} [delete]
 func Delete(c *gin.Context) {
-	var id uint
 
-	if err := c.ShouldBindQuery(&id); err != nil {
-		render.WriteResponse(c, errors.WithCode(e.ERROR_EXIST_TAG, e.GetMsg(e.ERROR_EXIST_TAG)), nil)
+	id, err := http.ParamsID(c, "id")
+	if err != nil {
 		return
 	}
 

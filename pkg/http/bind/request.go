@@ -1,8 +1,6 @@
 package bind
 
 import (
-	"bytes"
-	"io"
 	"strconv"
 
 	ecode "github.com/luenci/go-gin-example/pkg/e"
@@ -28,29 +26,6 @@ func Query(ctx *gin.Context, ptr interface{}) error {
 		render.WriteResponse(ctx, errors.WithCode(ecode.BIND_PARAMS_FAIL, ecode.GetMsg(ecode.BIND_PARAMS_FAIL)), err)
 	}
 	return err
-}
-
-func File(ctx *gin.Context, key string) (string, []byte, error) {
-	f, fh, err := ctx.Request.FormFile(key)
-	if err != nil {
-		render.WriteResponse(ctx, errors.WithCode(ecode.BIND_PARAMS_FAIL, ecode.GetMsg(ecode.BIND_PARAMS_FAIL)), err)
-		return "", nil, err
-	}
-	var content bytes.Buffer
-	buf := make([]byte, 4096)
-	for {
-		n, err := f.Read(buf)
-		if err != nil {
-			if err != io.EOF {
-				render.WriteResponse(ctx, errors.WithCode(ecode.BIND_PARAMS_FAIL, ecode.GetMsg(ecode.BIND_PARAMS_FAIL)), err)
-				return "", nil, err
-			}
-			break
-		}
-		content.Grow(n)
-		content.Write(buf[:n])
-	}
-	return fh.Filename, content.Bytes(), nil
 }
 
 func ParamsID(ctx *gin.Context, key string) (uint, error) {
