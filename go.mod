@@ -18,6 +18,7 @@ require (
 	github.com/swaggo/swag v1.7.3
 	github.com/ugorji/go v1.2.6 // indirect
 	github.com/unknwon/com v1.0.1
+	github.com/wxnacy/wgo v1.0.4
 	golang.org/x/crypto v0.0.0-20210817164053-32db794688a5 // indirect
 	golang.org/x/sys v0.0.0-20211103235746-7861aae1554b // indirect
 	golang.org/x/text v0.3.7 // indirect

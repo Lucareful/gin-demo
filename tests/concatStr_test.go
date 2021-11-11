@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/luenci/go-gin-example/pkg/util"
+	"github.com/luenci/go-gin-example/pkg/joint"
 )
 
 func TestConcatStr(t *testing.T) {
-	if str := util.ConcatStr("123", "456", "789"); str != "123456789" {
+	if str := joint.ConcatStr("123", "456", "789"); str != "123456789" {
 		t.Errorf("export 123456789, but %s got", str)
 	}
 	fmt.Println("success")
