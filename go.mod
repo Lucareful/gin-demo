@@ -7,15 +7,10 @@ require (
 	github.com/gin-gonic/gin v1.7.4
 	github.com/go-ini/ini v1.62.0
 	github.com/go-playground/validator/v10 v10.9.0
-	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
-	github.com/jinzhu/gorm v1.9.16
-	github.com/jinzhu/now v1.1.2 // indirect
 	github.com/json-iterator/go v1.1.11 // indirect
-	github.com/lib/pq v1.2.0 // indirect
 	github.com/marmotedu/errors v1.0.2
 	github.com/mattn/go-isatty v0.0.14 // indirect
-	github.com/mattn/go-sqlite3 v2.0.3+incompatible // indirect
 	github.com/novalagung/gubrak v1.0.0
 	github.com/smartystreets/goconvey v0.0.0-20190731233626-505e41936337 // indirect
 	github.com/swaggo/files v0.0.0-20210815190702-a29dd2bc99b2
@@ -29,6 +24,8 @@ require (
 	golang.org/x/tools v0.1.7
 	google.golang.org/protobuf v1.27.1 // indirect
 	gopkg.in/ini.v1 v1.47.0 // indirect
+	gorm.io/driver/mysql v1.1.3
+	gorm.io/gorm v1.22.2
 )
 
 // 后续每新增一个本地应用目录，你都需要主动去 go.mod 文件里新增一条 replace

@@ -3,7 +3,6 @@ package service
 import (
 	"github.com/luenci/go-gin-example/models"
 	"github.com/luenci/go-gin-example/types/request"
-	"github.com/luenci/go-gin-example/types/response"
 )
 
 type tagService struct{}
@@ -27,53 +26,47 @@ type tagService struct{}
 //	return &q, nil
 //}
 
-func (t *tagService) GetTagService(id uint) (*response.GetTagResponse, error) {
-	var tag models.Tag
+func (t *tagService) GetTagService(id uint) (*models.Tag, error) {
+	tag := models.NewTag()
 
 	if err := tag.GetTag(id); err != nil {
 		return nil, err
 	}
-	res := &response.GetTagResponse{
-		ID:         tag.ID,
-		Name:       tag.Name,
-		CreatedBy:  tag.CreatedBy,
-		ModifiedBy: tag.ModifiedBy,
-		State:      tag.State,
-	}
 
-	return res, nil
+	return tag, nil
 }
 
-func (t *tagService) CreateTagService(r request.CreateTagRequest) (*response.CreateTagResponse, error) {
+func (t *tagService) CreateTagService(r request.CreateTagRequest) (*models.Tag, error) {
 
-	if err := models.AddTag(r); err != nil {
-		return nil, nil
+	tag := models.NewTag()
+
+	if err := tag.CreateTag(r); err != nil {
+		return nil, err
 	}
+	tag.Name = r.Name
+	tag.CreatedBy = r.CreatedBy
+	tag.State = r.State
 
-	q := &response.CreateTagResponse{
-		Name:      r.Name,
-		CreatedBy: r.CreatedBy,
-		State:     r.State,
-	}
-
-	return q, nil
+	return tag, nil
 }
 
-func (t *tagService) UpdateTagService(r request.UpdateTagRequest) (*response.UpdateTagResponse, error) {
-	var tag models.Tag
+func (t *tagService) UpdateTagService(r request.UpdateTagRequest) (*models.Tag, error) {
+	tag := models.NewTag()
 
 	if err := tag.UpdateTag(r); err != nil {
 		return nil, err
 	}
-	res := &response.UpdateTagResponse{
-		ID:    tag.ID,
-		Name:  tag.Name,
-		State: tag.State,
-	}
 
-	return res, nil
+	return tag, nil
 }
 
-func (t *tagService) DeleteTagService(id uint) (*response.DeleteTagResponse, error) {
-	return nil, nil
+func (t *tagService) DeleteTagService(id uint) (*models.Tag, error) {
+	tag := models.NewTag()
+
+	if err := tag.DeleteTag(id); err != nil {
+		return nil, err
+	}
+
+	return tag, nil
+
 }

@@ -1,6 +1,7 @@
 package service
 
 import (
+	"github.com/luenci/go-gin-example/models"
 	"github.com/luenci/go-gin-example/types/request"
 	"github.com/luenci/go-gin-example/types/response"
 )
@@ -11,10 +12,10 @@ type Service struct {
 
 type TagService interface {
 	// ListTagService(request.ListTagRequest) (*response.ListTagResponse, error)
-	GetTagService(id uint) (*response.GetTagResponse, error)
-	DeleteTagService(id uint) (*response.DeleteTagResponse, error)
-	CreateTagService(request.CreateTagRequest) (*response.CreateTagResponse, error)
-	UpdateTagService(request.UpdateTagRequest) (*response.UpdateTagResponse, error)
+	GetTagService(id uint) (*models.Tag, error)
+	DeleteTagService(id uint) (*models.Tag, error)
+	CreateTagService(request.CreateTagRequest) (*models.Tag, error)
+	UpdateTagService(request.UpdateTagRequest) (*models.Tag, error)
 }
 
 type ArticleService interface {

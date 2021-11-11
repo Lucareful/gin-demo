@@ -31,9 +31,11 @@ func main() {
 
 	go func() {
 		// service connections
+		log.Printf(	"server is runing port: %d\n",setting.HTTPPort)
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			log.Fatalf("listen: %s\n", err)
 		}
+
 	}()
 
 	// Wait for interrupt signal to gracefully shut down the server with

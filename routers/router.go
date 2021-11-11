@@ -27,8 +27,7 @@ func InitRouter() *gin.Engine {
 	docs.SwaggerInfo.Title = "Study Swagger API"
 	docs.SwaggerInfo.Description = "This is a sample server API."
 	docs.SwaggerInfo.Version = "1.0"
-	docs.SwaggerInfo.Host = "127.0.1.1"
-	docs.SwaggerInfo.BasePath = "/api"
+	docs.SwaggerInfo.Host = "127.0.0.1:8000"
 	docs.SwaggerInfo.Schemes = []string{"http", "https"}
 
 	r.GET("/api/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
@@ -38,13 +37,13 @@ func InitRouter() *gin.Engine {
 		//获取标签列表
 		//apiv1.GET("/tags", v1.List)
 
-		apiv1.GET("/tags/:id", v1.Get)
+		apiv1.GET("/tag/:id", v1.Get)
 		//新建标签
-		apiv1.POST("/tags", v1.Create)
+		apiv1.POST("/tag", v1.Create)
 		//更新指定标签
-		apiv1.PUT("/tags", v1.Update)
+		apiv1.PUT("/tag", v1.Update)
 		//删除指定标签
-		apiv1.DELETE("/tags/:id", v1.Delete)
+		apiv1.DELETE("/tag/:id", v1.Delete)
 	}
 
 	return r

@@ -2,11 +2,11 @@ package v1
 
 import (
 	"github.com/luenci/go-gin-example/pkg/http/render"
-
 	"github.com/marmotedu/errors"
 
 	"github.com/gin-gonic/gin"
 	"github.com/luenci/go-gin-example/pkg/e"
+	http "github.com/luenci/go-gin-example/pkg/http/bind"
 	"github.com/luenci/go-gin-example/types/request"
 )
 
@@ -48,13 +48,13 @@ func Create(c *gin.Context) {
 	var r request.CreateTagRequest
 
 	if err := c.ShouldBindJSON(&r); err != nil {
-		render.WriteResponse(c, errors.WithCode(e.VALIDARION_ERRORS, e.GetMsg(e.VALIDARION_ERRORS)), nil)
+		render.WriteResponse(c, errors.WithCode(e.VALIDARION_ERRORS, e.GetMsg(e.VALIDARION_ERRORS)), err)
 		return
 	}
 
 	response, err := svc.Tag.CreateTagService(r)
 	if err != nil {
-		render.WriteResponse(c, errors.WithCode(e.ERROR_EXIST_TAG, e.GetMsg(e.ERROR_EXIST_TAG)), nil)
+		render.WriteResponse(c, errors.WithCode(e.ERROR_EXIST_TAG, e.GetMsg(e.ERROR_EXIST_TAG)), err)
 		return
 	}
 	render.WriteResponse(c, errors.WithCode(e.SUCCESS, e.GetMsg(e.SUCCESS)), response)
@@ -126,10 +126,9 @@ func Delete(c *gin.Context) {
 // @Failure 500 {object} render.HTTPError
 // @Router /api/v1/tag/{id} [get]
 func Get(c *gin.Context) {
-	var id uint
 
-	if err := c.ShouldBindQuery(&id); err != nil {
-		render.WriteResponse(c, errors.WithCode(e.ERROR_EXIST_TAG, e.GetMsg(e.ERROR_EXIST_TAG)), nil)
+	id, err := http.ParamsID(c, "id")
+	if err != nil {
 		return
 	}
 

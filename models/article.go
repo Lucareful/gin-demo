@@ -1,9 +1,7 @@
 package models
 
 import (
-	"time"
-
-	"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
 )
 
 type Article struct {
@@ -27,7 +25,7 @@ func ExistArticleByID(id int) bool {
 	return article.ID > 0
 }
 
-func GetArticleTotal(maps interface{}) (count int) {
+func GetArticleTotal(maps interface{}) (count int64) {
 	db.Model(&Article{}).Where(maps).Count(&count)
 
 	return
@@ -41,7 +39,6 @@ func GetArticles(pageNum int, pageSize int, maps interface{}) (articles []Articl
 
 func GetArticle(id int) (article Article) {
 	db.Where("id = ?", id).First(&article)
-	db.Model(&article).Related(&article.Tag)
 
 	return
 }
@@ -69,16 +66,4 @@ func DeleteArticle(id uint) bool {
 	db.Where("id = ?", id).Delete(Article{})
 
 	return true
-}
-
-func (article *Article) BeforeCreate(scope *gorm.Scope) error {
-	scope.SetColumn("CreatedOn", time.Now().Unix())
-
-	return nil
-}
-
-func (article *Article) BeforeUpdate(scope *gorm.Scope) error {
-	scope.SetColumn("ModifiedOn", time.Now().Unix())
-
-	return nil
 }
