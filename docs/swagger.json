@@ -160,6 +160,86 @@
         }
     },
     "definitions": {
+        "gorm.DeletedAt": {
+            "type": "object",
+            "properties": {
+                "time": {
+                    "type": "string"
+                },
+                "valid": {
+                    "description": "Valid is true if Time is not NULL",
+                    "type": "boolean"
+                }
+            }
+        },
+        "models.Tag": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "created_by": {
+                    "type": "string"
+                },
+                "deletedAt": {
+                    "$ref": "#/definitions/gorm.DeletedAt"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "modified_by": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "integer"
+                },
+                "updatedAt": {
+                    "type": "string"
+                }
+            }
+        },
+        "paginate.Query": {
+            "type": "object",
+            "properties": {
+                "all_data": {
+                    "type": "boolean"
+                },
+                "order": {
+                    "description": "排序参数(desc:倒序、asc：正序)",
+                    "type": "string",
+                    "default": "desc",
+                    "enum": [
+                        "desc",
+                        "asc"
+                    ]
+                },
+                "order_by": {
+                    "description": "排序对象",
+                    "type": "string",
+                    "default": "id"
+                },
+                "page": {
+                    "description": "页码",
+                    "type": "integer",
+                    "default": 1,
+                    "minimum": -1
+                },
+                "page_size": {
+                    "description": "每页大小(最大1000条)",
+                    "type": "integer",
+                    "default": 20,
+                    "maximum": 1000,
+                    "minimum": -1
+                },
+                "search": {
+                    "description": "模糊查询",
+                    "type": "string"
+                }
+            }
+        },
         "render.HTTPError": {
             "type": "object",
             "properties": {
@@ -183,6 +263,51 @@
                 "message": {
                     "type": "string",
                     "example": "request ok 200"
+                }
+            }
+        },
+        "render.PaginateData": {
+            "type": "object",
+            "properties": {
+                "items": {
+                    "type": "object"
+                },
+                "paginate": {
+                    "$ref": "#/definitions/render.PaginateInfo"
+                }
+            }
+        },
+        "render.PaginateInfo": {
+            "type": "object",
+            "properties": {
+                "page": {
+                    "description": "页数",
+                    "type": "integer"
+                },
+                "page_size": {
+                    "description": "每页数据量",
+                    "type": "integer"
+                },
+                "total": {
+                    "description": "数据总数",
+                    "type": "integer"
+                }
+            }
+        },
+        "render.PaginateResult": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "状态码",
+                    "type": "integer"
+                },
+                "data": {
+                    "description": "返回内容",
+                    "$ref": "#/definitions/render.PaginateData"
+                },
+                "msg": {
+                    "description": "请求结果",
+                    "type": "string"
                 }
             }
         },

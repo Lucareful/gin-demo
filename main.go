@@ -15,7 +15,7 @@ import (
 )
 
 // 生成 swagger
-//go:generate swag init -g routers/router.go
+//go:generate swag init -g routers/router.go --parseDependency --parseInternal --generatedTime --parseDepth 10
 // 生成错误码
 //go:generate codegen -type=int pkg/e/apiserver.go
 

@@ -11,7 +11,7 @@ func init() {
 	register(ERROR_NOT_EXIST_TAG, 401, "The Tag does not exist")
 	register(ERROR_NOT_EXIST_ARTICLE, 401, "The article does not exist")
 	register(ERROR_AUTH_CHECK_TOKEN_FAIL, 403, "Token鉴权失败")
-	register(BIND_PARAMS_FAIL, 500, "Internal server error")
+	register(BIND_PARAMS_FAIL, 403, "Bind 参数失败")
 	register(ERROR_AUTH_CHECK_TOKEN_TIMEOUT, 403, "Token已超时")
 	register(ERROR_AUTH_TOKEN, 403, "Token生成失败")
 	register(ERROR_AUTH, 403, "Token错误")

@@ -1,4 +1,61 @@
 definitions:
+  gorm.DeletedAt:
+    properties:
+      time:
+        type: string
+      valid:
+        description: Valid is true if Time is not NULL
+        type: boolean
+    type: object
+  models.Tag:
+    properties:
+      created_by:
+        type: string
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      id:
+        type: integer
+      modified_by:
+        type: string
+      name:
+        type: string
+      state:
+        type: integer
+      updatedAt:
+        type: string
+    type: object
+  paginate.Query:
+    properties:
+      all_data:
+        type: boolean
+      order:
+        default: desc
+        description: 排序参数(desc:倒序、asc：正序)
+        enum:
+        - desc
+        - asc
+        type: string
+      order_by:
+        default: id
+        description: 排序对象
+        type: string
+      page:
+        default: 1
+        description: 页码
+        minimum: -1
+        type: integer
+      page_size:
+        default: 20
+        description: 每页大小(最大1000条)
+        maximum: 1000
+        minimum: -1
+        type: integer
+      search:
+        description: 模糊查询
+        type: string
+    type: object
   render.HTTPError:
     properties:
       code:
@@ -15,6 +72,37 @@ definitions:
         type: integer
       message:
         example: request ok 200
+        type: string
+    type: object
+  render.PaginateData:
+    properties:
+      items:
+        type: object
+      paginate:
+        $ref: '#/definitions/render.PaginateInfo'
+    type: object
+  render.PaginateInfo:
+    properties:
+      page:
+        description: 页数
+        type: integer
+      page_size:
+        description: 每页数据量
+        type: integer
+      total:
+        description: 数据总数
+        type: integer
+    type: object
+  render.PaginateResult:
+    properties:
+      code:
+        description: 状态码
+        type: integer
+      data:
+        $ref: '#/definitions/render.PaginateData'
+        description: 返回内容
+      msg:
+        description: 请求结果
         type: string
     type: object
   request.CreateTagRequest:

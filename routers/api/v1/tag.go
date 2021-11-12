@@ -16,8 +16,8 @@ import (
 // @Tags tag
 // @Accept  json
 // @Produce  json
-// @Param tag body paginate.Query true "List all tag"
-// @Success 200 {object} render.PaginateResponse
+// @Param tag body paginate.Query true "分页查询对象"
+// @Success 200 {object} render.PaginateResult{data=[]models.Tag} "请求成功"
 // @Failure 500 {object} render.HTTPError
 // @Router /api/v1/tag [list]
 func List(c *gin.Context) {
