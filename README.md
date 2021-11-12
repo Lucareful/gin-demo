@@ -8,54 +8,55 @@
 ## 目录结构
 
 ```shell
-.
+..
+├── CHANGELOG.md
 ├── README.md
 ├── api.http
 ├── conf
 │   ├── app.ini
 │   └── config.yml
-├── docs                          # 接口文档
+├── docs
 │   ├── docs.go
+│   ├── img.png
 │   ├── swagger.json
 │   └── swagger.yaml
-├── gen
 ├── go.mod
 ├── go.sum
-├── img.png
 ├── main.go
 ├── middleware
+│   ├── cors.go
 │   ├── rabc.go
 │   └── timter.go
-├── models                          # 模型层 （数据库）
+├── models
 │   ├── article.go
 │   ├── models.go
 │   ├── rbac.go
 │   └── tag.go
 ├── pkg
 │   ├── e
-│   ├── errors                # 自定义错误包
-│   ├── http                  # 自定义请求包
-│   ├── rbac                  # casbin 权限校验
-│   ├── setting               # 一些设置
-│   ├── tools                 # 工具包
+│   ├── http
+│   ├── joint
+│   ├── rbac
+│   ├── setting
+│   ├── tools
 │   └── util
-├── routers                         # 路由层
+├── routers
 │   ├── api
 │   └── router.go
 ├── run-go-vet.sh
 ├── runtime
-├── service                         # 业务逻辑层
+├── service
 │   ├── service.go
+│   ├── service_article.go
 │   └── service_tag.go
 ├── tests
 │   ├── concatStr_test.go
 │   ├── rabc_test.go
 │   └── validator_test.go
-├── tmp                             # 热更新临时文件
-│   └── main.exe
-├── types                           # 请求和响应返回结构体
-    ├── request
-    └── response
+├── types
+    ├── request
+    └── response
+
 
 ```
 
