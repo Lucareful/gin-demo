@@ -2,22 +2,26 @@ package service
 
 import (
 	"github.com/luenci/go-gin-example/models"
+	"github.com/luenci/go-gin-example/pkg/http/paginate"
 	"github.com/luenci/go-gin-example/types/request"
 	"github.com/luenci/go-gin-example/types/response"
 )
 
+// Service 所有接口服务的注册.
 type Service struct {
 	Tag TagService
 }
 
+// TagService tag 服务接口.
 type TagService interface {
-	// ListTagService(request.ListTagRequest) (*response.ListTagResponse, error)
+	ListTagService(query *paginate.Query) (*models.TagList, error)
 	GetTagService(id uint) (*models.Tag, error)
 	DeleteTagService(id uint) (*models.Tag, error)
 	CreateTagService(request.CreateTagRequest) (*models.Tag, error)
 	UpdateTagService(request.UpdateTagRequest) (*models.Tag, error)
 }
 
+// ArticleService 文件服务接口.
 type ArticleService interface {
 	GetArticleService(id uint) (*response.GetTagResponse, error)
 	DeleteArticleService(id uint) (*response.DeleteTagResponse, error)

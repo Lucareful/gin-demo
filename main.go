@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"syscall"
 	"time"
 
 	"github.com/luenci/go-gin-example/pkg/setting"
@@ -31,7 +32,7 @@ func main() {
 
 	go func() {
 		// service connections
-		log.Printf(	"server is runing port: %d\n",setting.HTTPPort)
+		log.Printf("server is runing port: %d\n", setting.HTTPPort)
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			log.Fatalf("listen: %s\n", err)
 		}
@@ -40,8 +41,15 @@ func main() {
 
 	// Wait for interrupt signal to gracefully shut down the server with
 	// a timeout of 5 seconds.
-	quit := make(chan os.Signal)
-	signal.Notify(quit, os.Interrupt)
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit,
+		syscall.SIGINT,
+		syscall.SIGTERM,
+		syscall.SIGSEGV,
+		syscall.SIGABRT,
+		syscall.SIGILL,
+		syscall.SIGFPE,
+		os.Interrupt)
 	<-quit
 	log.Println("Shutdown Server ...")
 

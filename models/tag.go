@@ -1,6 +1,7 @@
 package models
 
 import (
+	"github.com/luenci/go-gin-example/pkg/http/paginate"
 	"github.com/luenci/go-gin-example/types/request"
 	"github.com/marmotedu/errors"
 	"gorm.io/gorm"
@@ -14,6 +15,12 @@ type Tag struct {
 	CreatedBy  string `json:"created_by" gorm:"unique_index:name"`
 	ModifiedBy string `json:"modified_by"`
 	State      int    `json:"state" gorm:"unique_index:name"`
+}
+
+// TagList Tag 列表
+type TagList struct {
+	TotalCount int64
+	Item       []*Tag
 }
 
 // GetTag 获取单个 tag 记录.
@@ -52,6 +59,39 @@ func (t *Tag) CreateTag(r request.CreateTagRequest) error {
 	return errors.WithStack(err)
 }
 
+// ListTag 获取所有 tag 分页返回
+func (tl *TagList) ListTag(r *paginate.Query) error {
+	fieldList, err := getFieldList(GetDB(), new(Tag))
+	if err != nil {
+		return err
+	}
+	err = GetDB().Scopes(
+		paginate.Paginate(r, nil, fieldList),
+	).Find(&tl.Item).Limit(-1).Offset(-1).Count(&tl.TotalCount).Error
+	return errors.WithStack(err)
+}
+
 func NewTag() *Tag {
 	return &Tag{}
+}
+
+func NewListTag() *TagList {
+	return &TagList{}
+}
+
+// getFieldList 获取指定数据表的所有字段
+func getFieldList(db *gorm.DB, bean interface{}) ([]string, error) {
+	var fieldList []string
+	stmt := &gorm.Statement{DB: db}
+	err := stmt.Parse(bean)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	for i := range stmt.Schema.Fields {
+		fieldName := stmt.Schema.Fields[i].DBName
+		if fieldName != "" {
+			fieldList = append(fieldList, fieldName)
+		}
+	}
+	return fieldList, nil
 }

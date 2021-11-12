@@ -1,11 +1,5 @@
 package request
 
-// ListTagRequest tag 表 list 接口请求 struct
-type ListTagRequest struct {
-	Name  string `form:"name" binding:"required"`
-	State int    `form:"state" binding:"eq=0"`
-}
-
 // CreateTagRequest tag 表 create 接口请求 struct
 type CreateTagRequest struct {
 	Name      string `json:"name" binding:"required"`

@@ -10,29 +10,29 @@ import (
 	"github.com/luenci/go-gin-example/types/request"
 )
 
-// List 获取多个文章标签
-//func List(c *gin.Context) {
-//	var r request.ListTagRequest
-//
-//	if err := c.ShouldBindQuery(&r); err != nil {
-//		erros := make(map[string]interface{})
-//		erros["code"] = e.VALIDARION_ERRORS
-//		erros["message"] = e.GetMsg(e.VALIDARION_ERRORS)
-//
-//		c.AbortWithStatusJSON(
-//			http.StatusInternalServerError,
-//			gin.H{"data": erros})
-//		return
-//	}
-//
-//	//response, err := svc.Tag.ListTagsService(r)
-//	if err != nil {
-//		c.JSON(http.StatusInternalServerError, errors.WithCode(e.ERROR_NOT_EXIST_TAG, e.GetMsg(e.ERROR_NOT_EXIST_TAG)))
-//		return
-//	}
-//
-//	c.JSON(http.StatusOK, response)
-//}
+// List godoc
+// @Summary List all tag - 返回所有 tag 数据.
+// @Description List all tag
+// @Tags tag
+// @Accept  json
+// @Produce  json
+// @Param tag body paginate.Query true "List all tag"
+// @Success 200 {object} render.PaginateResponse
+// @Failure 500 {object} render.HTTPError
+// @Router /api/v1/tag [list]
+func List(c *gin.Context) {
+	query := http.PaginateQuery(c)
+
+	response, err := svc.Tag.ListTagService(query)
+
+	if err != nil {
+		render.PaginateResponse(c, 0, 0, 0, err)
+		return
+	}
+
+	render.PaginateResponse(c, response.TotalCount, query.Page, query.PageSize, response.Item)
+
+}
 
 // Create godoc
 // @Summary create a tag - 创建一个文章标签
