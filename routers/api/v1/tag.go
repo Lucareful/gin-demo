@@ -19,7 +19,7 @@ import (
 // @Param tag body paginate.Query true "分页查询对象"
 // @Success 200 {object} render.PaginateResult{data=[]models.Tag} "请求成功"
 // @Failure 500 {object} render.HTTPError
-// @Router /api/v1/tag [list]
+// @Router /api/v1/tag [get]
 func List(c *gin.Context) {
 	query := http.PaginateQuery(c)
 
