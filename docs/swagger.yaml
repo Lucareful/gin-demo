@@ -161,6 +161,38 @@ info:
   contact: {}
 paths:
   /api/v1/tag:
+    get:
+      consumes:
+      - application/json
+      description: List all tag
+      parameters:
+      - description: 分页查询对象
+        in: body
+        name: tag
+        required: true
+        schema:
+          $ref: '#/definitions/paginate.Query'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/render.PaginateResult'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/models.Tag'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/render.HTTPError'
+      summary: List all tag - 返回所有 tag 数据.
+      tags:
+      - tag
     patch:
       consumes:
       - application/json

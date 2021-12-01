@@ -13,7 +13,7 @@ repos:
   rev: v0.4.0
   hooks:
     - id: go-fmt
-    # - id: go-vet
+    - id: go-vet
     - id: go-lint
     - id: go-imports
     # - id: go-cyclo
@@ -25,10 +25,3 @@ repos:
     # - id: go-unit-tests
     # - id: go-build
     - id: go-mod-tidy
-
-- repo: local
-  hooks:
-    - id: go-vet
-      name: go-vet
-      language: system
-      entry: ./run-go-vet.sh
