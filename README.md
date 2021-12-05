@@ -12,7 +12,7 @@
 ├── CHANGELOG.md
 ├── README.md
 ├── api.http
-├── conf
+├── config
 │   ├── app.ini
 │   └── config.yml
 ├── docs

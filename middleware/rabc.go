@@ -9,7 +9,7 @@ import (
 
 // ValidAuth 权限校验
 func ValidAuth() bool {
-	e, err := casbin.NewEnforcer("../pkg/rbac/model.conf", "../pkg/rbac/policy.csv")
+	e, err := casbin.NewEnforcer("../pkg/rbac/model.config", "../pkg/rbac/policy.csv")
 	if err != nil {
 		return false
 	}

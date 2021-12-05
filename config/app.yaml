@@ -1,0 +1,17 @@
+Server:
+  Mode: debug # server mode: release, debug, test
+  BindAddress: :10001 # bind address
+  ReadTimeout: 60
+  WriteTimeout: 60
+
+Database:
+  Type: mysql
+  User: root
+  Password: root
+  Hots: 127.0.0.1
+  Port: 3306
+  Name: gin_study
+
+APP:
+  PageSize: 10
+  JwtSecret: Luenci23347$040412
