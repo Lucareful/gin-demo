@@ -23,7 +23,7 @@ func InitRouter() *gin.Engine {
 
 	gin.SetMode(setting.RunMode)
 
-	// programatically set swagger info
+	// programmatically set swagger info
 	docs.SwaggerInfo.Title = "Study Swagger API"
 	docs.SwaggerInfo.Description = "This is a sample server API."
 	docs.SwaggerInfo.Version = "1.0"
@@ -35,15 +35,26 @@ func InitRouter() *gin.Engine {
 	apiv1 := r.Group("/api/v1")
 	{
 		//获取标签列表
-		apiv1.GET("/tag", v1.List)
+		apiv1.GET("/tag", v1.ListTag)
 
-		apiv1.GET("/tag/:id", v1.Get)
+		apiv1.GET("/tag/:id", v1.GetTag)
 		//新建标签
-		apiv1.POST("/tag", v1.Create)
+		apiv1.POST("/tag", v1.CreateTag)
 		//更新指定标签
-		apiv1.PATCH("/tag", v1.Update)
+		apiv1.PATCH("/tag", v1.UpdateTag)
 		//删除指定标签
-		apiv1.DELETE("/tag/:id", v1.Delete)
+		apiv1.DELETE("/tag/:id", v1.DeleteTag)
+
+		//获取用户列表
+		apiv1.GET("/user", v1.ListUser)
+		// 获取指定用户
+		apiv1.GET("/user/:id", v1.GetUser)
+		// 新建用户
+		apiv1.POST("/user", v1.CreateUser)
+		// 更新指定用户
+		apiv1.PATCH("/user/:id", v1.UpdateUser)
+		// 删除指定用户
+		apiv1.DELETE("/user/:id", v1.DeleteUser)
 	}
 
 	return r
