@@ -7,6 +7,7 @@ require (
 	github.com/gin-gonic/gin v1.7.4
 	github.com/go-ini/ini v1.62.0
 	github.com/go-playground/validator/v10 v10.9.0
+	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/luenci/errors v1.0.1
 	github.com/marmotedu/errors v1.0.2
 	github.com/mattn/go-isatty v0.0.14 // indirect

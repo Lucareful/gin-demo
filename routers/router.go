@@ -30,6 +30,8 @@ func InitRouter() *gin.Engine {
 	docs.SwaggerInfo.Host = "127.0.0.1:8000"
 	docs.SwaggerInfo.Schemes = []string{"http", "https"}
 
+	r.POST("login", v1.Login)
+
 	r.GET("/api/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	apiv1 := r.Group("/api/v1")
