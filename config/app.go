@@ -36,8 +36,8 @@ type Server struct {
 type Mysql struct {
 	Host                  string
 	Port                  string
-	Name                  string
-	Username              string
+	DBName                string
+	User                  string
 	Password              string
 	MaxIdleConnections    int
 	MaxOpenConnections    int

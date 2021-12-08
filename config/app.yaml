@@ -4,13 +4,12 @@ Server:
   ReadTimeout: 60
   WriteTimeout: 60
 
-Database:
-  Type: mysql
+Mysql:
   User: root
-  Password: root
-  Hots: 127.0.0.1
+  Password: admin123
+  Host: 127.0.0.1
   Port: 3306
-  Name: gin_study
+  DBName: gin_study
 
 APP:
   PageSize: 10

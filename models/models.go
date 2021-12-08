@@ -17,13 +17,15 @@ var db *gorm.DB
 func InitDB() {
 
 	conf := config.GetConf()
+	fmt.Printf("%+v\n", conf)
 
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local",
-		conf.Mysql.Username,
+		conf.Mysql.User,
 		conf.Mysql.Password,
 		conf.Mysql.Host,
 		conf.Mysql.Port,
-		conf.Mysql.Name)
+		conf.Mysql.DBName)
+	fmt.Println(dsn)
 
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
@@ -43,7 +45,7 @@ func InitDB() {
 	// SetConnMaxLifetime 设置了连接可复用的最大时间。
 	sqlDB.SetConnMaxLifetime(time.Hour)
 
-	db.AutoMigrate(&CasbinTable{}, &Article{}, &Tag{})
+	db.AutoMigrate(&CasbinTable{}, &Article{}, &Tag{}, &User{})
 
 }
 

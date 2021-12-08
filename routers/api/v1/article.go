@@ -4,13 +4,14 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/luenci/go-gin-example/config"
+
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"github.com/unknwon/com"
 
 	"github.com/luenci/go-gin-example/models"
 	"github.com/luenci/go-gin-example/pkg/e"
-	"github.com/luenci/go-gin-example/pkg/setting"
 )
 
 // cache sturct
@@ -65,7 +66,7 @@ func GetArticles(c *gin.Context) {
 	} else {
 		code = e.SUCCESS
 
-		data["lists"] = models.GetArticles(setting.GetPage(c), setting.PageSize, maps)
+		data["lists"] = models.GetArticles(1, config.GetConf().App.PageSize, maps)
 		data["total"] = models.GetArticleTotal(maps)
 	}
 

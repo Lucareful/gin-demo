@@ -9,14 +9,14 @@ import (
 type tagService struct{}
 
 func (t *tagService) ListTagService(query *paginate.Query) (*models.TagList, error) {
-	listTag := models.NewListUser()
+	listTag := models.NewListTag()
 
 	err := listTag.ListTag(query)
 	if err != nil {
 		return nil, err
 	}
 
-	return listTag, nil
+	return (*models.TagList)(listTag), nil
 }
 
 func (t *tagService) GetTagService(id uint) (*models.Tag, error) {

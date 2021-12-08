@@ -2,12 +2,12 @@ package routers
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/luenci/go-gin-example/config"
 	"github.com/luenci/go-gin-example/docs"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 
 	middleware "github.com/luenci/go-gin-example/middleware"
-	"github.com/luenci/go-gin-example/pkg/setting"
 	v1 "github.com/luenci/go-gin-example/routers/api/v1"
 )
 
@@ -21,7 +21,7 @@ func InitRouter() *gin.Engine {
 
 	r.Use(gin.Recovery())
 
-	gin.SetMode(setting.RunMode)
+	gin.SetMode(config.GetConf().Server.Mode)
 
 	// programmatically set swagger info
 	docs.SwaggerInfo.Title = "Study Swagger API"
@@ -37,7 +37,7 @@ func InitRouter() *gin.Engine {
 	apiv1 := r.Group("/api/v1")
 	{
 		//获取标签列表
-		apiv1.GET("/tag", v1.ListTag)
+		//apiv1.GET("/tag", v1.ListTag)
 
 		apiv1.GET("/tag/:id", v1.GetTag)
 		//新建标签
