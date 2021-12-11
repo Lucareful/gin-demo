@@ -5,7 +5,7 @@ import (
 	"github.com/luenci/go-gin-example/models"
 )
 
-func LoginJwt() gin.HandlerFunc {
+func ValidateJwt() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		tokenString := c.Request.Header.Get("Authorization")
 		if tokenString == "" {
