@@ -4,13 +4,13 @@ import (
 	"github.com/luenci/go-gin-example/models"
 	"github.com/luenci/go-gin-example/pkg/http/paginate"
 	"github.com/luenci/go-gin-example/types/request"
-	"github.com/luenci/go-gin-example/types/response"
 )
 
 // Service 所有接口服务的注册.
 type Service struct {
-	Tag  TagService
-	User UserService
+	Tag     TagService
+	User    UserService
+	Article ArticleService
 }
 
 // TagService tag 服务接口.
@@ -22,6 +22,7 @@ type TagService interface {
 	UpdateTagService(request.UpdateTagRequest) (*models.Tag, error)
 }
 
+// UserService user 服务接口.
 type UserService interface {
 	ListUserService(query *paginate.Query) (*models.UserList, error)
 	GetUserService(id uint) (*models.User, error)
@@ -30,18 +31,20 @@ type UserService interface {
 	UpdateUserService(request.UpdateUserRequest) (*models.User, error)
 }
 
-// ArticleService 文件服务接口.
+// ArticleService 文章服务接口.
 type ArticleService interface {
-	GetArticleService(id uint) (*response.GetTagResponse, error)
-	DeleteArticleService(id uint) (*response.DeleteTagResponse, error)
-	CreateArticleService(request.CreateTagRequest) (*response.CreateTagResponse, error)
-	UpdateArticleService(request.UpdateTagRequest) (*response.UpdateTagResponse, error)
+	ListArticleService(query *paginate.Query) (*models.ArticleList, error)
+	GetArticleService(id uint) (*models.Article, error)
+	DeleteArticleService(id uint) (*models.Article, error)
+	CreateArticleService(request.CreateArticleRequest) (*models.Article, error)
+	UpdateArticleService(request.UpdateArticleRequest) (*models.Article, error)
 }
 
 func NewService() *Service {
 	// 检查struct是否实现了接口。原理:具体类型转换成接口类型，假如实现了接口类型，编译就可以通过，没有现实编译就会出错
 	return &Service{
-		Tag:  (*tagService)(nil),
-		User: (*userService)(nil),
+		Tag:     (*tagService)(nil),
+		User:    (*userService)(nil),
+		Article: (*articleService)(nil),
 	}
 }
