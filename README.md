@@ -67,11 +67,11 @@
 ## 开发 TODO list
 
 - [x] 目录结构重构
-- [ ] 代码补充 & 重构(50%)
+- [ ] 代码补充 & 重构(80%)
 - [x] [pkg 模块抽离](https://github.com/luenci)
 - [x] [oauth2 认证服务](https://github.com/Lucareful/oauth2-server)
 - [x] 接口文档 swagger 引入
 - [ ] websocket 流式日志 & eventStream
 - [ ] rbac 权限校验
-- [ ] gRPC 调用 实践
-- [ ] gRPC-gateway 实践
+- [x] [gRPC 实践](https://github.com/Lucareful/grpc-demo)
+- [x] [gRPC-gateway 实践](https://github.com/Lucareful/grpc-getway-demo)
