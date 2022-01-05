@@ -8,13 +8,15 @@
 ## 目录结构
 
 ```shell
-..
+.
 ├── CHANGELOG.md
 ├── README.md
 ├── api.http
-├── conf
+├── config
+│   ├── app.go
 │   ├── app.ini
-│   └── config.yml
+│   ├── app.yaml
+│   └── app_test.go
 ├── docs
 │   ├── docs.go
 │   ├── img.png
@@ -25,37 +27,40 @@
 ├── main.go
 ├── middleware
 │   ├── cors.go
+│   ├── jwt.go
 │   ├── rabc.go
 │   └── timter.go
 ├── models
 │   ├── article.go
+│   ├── jwt.go
 │   ├── models.go
 │   ├── rbac.go
-│   └── tag.go
+│   ├── tag.go
+│   └── user.go
 ├── pkg
 │   ├── e
 │   ├── http
 │   ├── joint
 │   ├── rbac
-│   ├── setting
-│   ├── tools
-│   └── util
+│   └── tools
 ├── routers
 │   ├── api
 │   └── router.go
-├── run-go-vet.sh
 ├── runtime
 ├── service
 │   ├── service.go
-│   ├── service_article.go
-│   └── service_tag.go
+│   ├── serviceArticle.go
+│   ├── serviceTag.go
+│   └── serviceUser.go
 ├── tests
 │   ├── concatStr_test.go
+│   ├── jwt_test.go
 │   ├── rabc_test.go
 │   └── validator_test.go
 ├── types
-    ├── request
-    └── response
+├── request
+└── response
+
 
 
 ```
@@ -67,9 +72,11 @@
 ## 开发 TODO list
 
 - [x] 目录结构重构
+
 - [ ] 代码补充 & 重构(80%)
 - [x] [pkg 模块抽离](https://github.com/luenci)
 - [x] [oauth2 认证服务](https://github.com/Lucareful/oauth2-server)
+- [x] JWT token 签名认证
 - [x] 接口文档 swagger 引入
 - [ ] websocket 流式日志 & eventStream
 - [ ] rbac 权限校验

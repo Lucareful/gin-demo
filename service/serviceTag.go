@@ -16,7 +16,7 @@ func (t *tagService) ListTagService(query *paginate.Query) (*models.TagList, err
 		return nil, err
 	}
 
-	return listTag, nil
+	return (*models.TagList)(listTag), nil
 }
 
 func (t *tagService) GetTagService(id uint) (*models.Tag, error) {

@@ -26,6 +26,15 @@ definitions:
       updatedAt:
         type: string
     type: object
+  models.User:
+    properties:
+      id:
+        type: integer
+      password:
+        type: string
+      username:
+        type: string
+    type: object
   paginate.Query:
     properties:
       all_data:
@@ -117,6 +126,16 @@ definitions:
     - created_by
     - name
     type: object
+  request.CreateUserRequest:
+    properties:
+      password:
+        type: string
+      user_name:
+        type: string
+    required:
+    - password
+    - user_name
+    type: object
   request.UpdateTagRequest:
     properties:
       id:
@@ -125,6 +144,19 @@ definitions:
         type: string
       state:
         type: integer
+    type: object
+  request.UpdateUserRequest:
+    properties:
+      id:
+        type: integer
+      password:
+        type: string
+      user_name:
+        type: string
+    required:
+    - id
+    - password
+    - user_name
     type: object
   response.CreateTagResponse:
     properties:
@@ -164,7 +196,7 @@ paths:
     get:
       consumes:
       - application/json
-      description: List all tag
+      description: ListTag all tag
       parameters:
       - description: 分页查询对象
         in: body
@@ -190,15 +222,15 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/render.HTTPError'
-      summary: List all tag - 返回所有 tag 数据.
+      summary: ListTag all tag - 返回所有 tag 数据.
       tags:
       - tag
     patch:
       consumes:
       - application/json
-      description: Update an article tag
+      description: UpdateTag an article tag
       parameters:
-      - description: Update article tag
+      - description: UpdateTag article tag
         in: body
         name: tag
         required: true
@@ -215,7 +247,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/render.HTTPError'
-      summary: Update a tag - 更新文章标签
+      summary: UpdateTag a tag - 更新文章标签
       tags:
       - tag
     post:
@@ -247,7 +279,7 @@ paths:
     delete:
       consumes:
       - application/json
-      description: Delete an article tag
+      description: DeleteTag an article tag
       parameters:
       - description: Tag ID
         format: uint
@@ -266,13 +298,13 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/render.HTTPError'
-      summary: Delete a tag - 删除文章标签
+      summary: DeleteTag a tag - 删除文章标签
       tags:
       - tag
     get:
       consumes:
       - application/json
-      description: Get an article tag (获取单个文章标签)
+      description: GetTag an article tag (获取单个文章标签)
       parameters:
       - description: Tag ID
         format: uint
@@ -291,7 +323,141 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/render.HTTPError'
-      summary: Get a tag - 获取单个文章标签
+      summary: GetTag a tag - 获取单个文章标签
       tags:
       - tag
+  /api/v1/user:
+    get:
+      consumes:
+      - application/json
+      description: ListUser all user
+      parameters:
+      - description: 分页查询对象
+        in: body
+        name: tag
+        required: true
+        schema:
+          $ref: '#/definitions/paginate.Query'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/render.PaginateResult'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/models.User'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/render.HTTPError'
+      summary: ListUser all user - 返回所有 user 数据.
+      tags:
+      - tag
+    patch:
+      consumes:
+      - application/json
+      description: UpdateUser a user info
+      parameters:
+      - description: UpdateTag article user
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/request.UpdateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/render.HTTPError'
+      summary: UpdateUser a user - 更新用户信息
+      tags:
+      - user
+    post:
+      consumes:
+      - application/json
+      description: create a user
+      parameters:
+      - description: Add article user
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/request.CreateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/models.User'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/render.HTTPError'
+      summary: create a user - 创建一个用户标签
+      tags:
+      - user
+  /api/v1/user/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: DeleteUser an article user
+      parameters:
+      - description: Tag ID
+        format: uint
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/render.HTTPSuccess'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/render.HTTPError'
+      summary: DeleteUser a user - 删除文章标签
+      tags:
+      - user
+    get:
+      consumes:
+      - application/json
+      description: GetUser a user (获取单个用户)
+      parameters:
+      - description: Tag ID
+        format: uint
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/render.HTTPError'
+      summary: GetUser a user - 获取用户信息.
+      tags:
+      - user
 swagger: "2.0"

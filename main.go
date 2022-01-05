@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -10,7 +9,8 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/luenci/go-gin-example/pkg/setting"
+	"github.com/luenci/go-gin-example/config"
+	db "github.com/luenci/go-gin-example/models"
 	"github.com/luenci/go-gin-example/routers"
 )
 
@@ -20,23 +20,27 @@ import (
 //go:generate codegen -type=int pkg/e/apiserver.go
 
 func main() {
-	router := routers.InitRouter()
+	// 初始化配置
+	config.InitConf()
+	conf := config.GetConf()
+
+	// 初始化 Database
+	db.InitDB()
 
 	srv := &http.Server{
-		Addr:           fmt.Sprintf(":%d", setting.HTTPPort),
-		Handler:        router,
-		ReadTimeout:    setting.ReadTimeout,
-		WriteTimeout:   setting.WriteTimeout,
+		Addr:           conf.Server.BindAddress,
+		Handler:        routers.InitRouter(),
+		ReadTimeout:    conf.Server.ReadTimeout * time.Second,
+		WriteTimeout:   conf.Server.WriteTimeout * time.Second,
 		MaxHeaderBytes: 1 << 20,
 	}
 
 	go func() {
 		// service connections
-		log.Printf("server is runing port: %d\n", setting.HTTPPort)
+		log.Printf("server is runing port: %d\n", conf.Server.BindAddress)
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			log.Fatalf("listen: %s\n", err)
 		}
-
 	}()
 
 	// Wait for interrupt signal to gracefully shut down the server with

@@ -1,9 +1,9 @@
 package models
 
 import (
+	"github.com/luenci/errors"
 	"github.com/luenci/go-gin-example/pkg/http/paginate"
 	"github.com/luenci/go-gin-example/types/request"
-	"github.com/marmotedu/errors"
 	"gorm.io/gorm"
 )
 
